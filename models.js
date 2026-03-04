@@ -228,100 +228,52 @@
 		});
 	}
 
-	// Создаем кнопку
-	function createButton() {
-		// Проверяем, не существует ли уже кнопка
-		if (document.getElementById('compatibility-filter-activator')) {
-			return;
+	// Создаем простую кнопку
+	const button = document.createElement('button');
+	button.id = 'compatibility-filter-activator';
+	button.textContent = '🔧';
+	button.title = 'Активировать фильтр совместимости';
+
+	button.addEventListener('click', function () {
+		const success = initCompatibilityFilter();
+
+		if (success) {
+			this.style.backgroundColor = '#00FF00';
+			this.style.color = 'black';
+			this.textContent = '_Фильтр активирован 🔧';
+
+			setTimeout(() => {
+				this.style.backgroundColor = '';
+				this.style.color = '';
+				this.textContent = '🔧';
+			}, 1000);
+		} else {
+			this.style.backgroundColor = '#FF0000';
+			this.style.color = 'white';
+			this.textContent = '_Не удалось найти фильтр 🔧';
+
+			setTimeout(() => {
+				this.style.backgroundColor = '';
+				this.style.color = '';
+				this.textContent = '🔧';
+			}, 1000);
 		}
+	});
 
-		const button = document.createElement('button');
-		button.id = 'compatibility-filter-activator';
-		button.textContent = '🔧';
-		button.title = 'Активировать фильтр совместимости';
-		
-		// Добавляем стили прямо в элемент
-		button.style.position = 'fixed';
-		button.style.top = '3px';
-		button.style.right = '3px';
-		button.style.zIndex = '9999';
-		button.style.border = 'none';
-		button.style.borderRadius = '4px';
-		button.style.cursor = 'pointer';
-		button.style.fontSize = '20px';
-		button.style.width = '30px';
-		button.style.height = '30px';
-		button.style.display = 'flex';
-		button.style.alignItems = 'center';
-		button.style.justifyContent = 'center';
-		button.style.backgroundColor = '#4CAF50';
-		button.style.color = 'white';
-		button.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
-		button.style.transition = 'all 0.3s';
-
-		button.addEventListener('mouseenter', function() {
-			this.style.backgroundColor = '#45a049';
-		});
-
-		button.addEventListener('mouseleave', function() {
-			this.style.backgroundColor = '#4CAF50';
-		});
-
-		button.addEventListener('click', function() {
-			const success = initCompatibilityFilter();
-
-			if (success) {
-				this.style.backgroundColor = '#00FF00';
-				this.style.color = 'black';
-				this.textContent = '✅';
-				this.title = 'Фильтр активирован';
-
-				setTimeout(() => {
-					this.style.backgroundColor = '#4CAF50';
-					this.style.color = 'white';
-					this.textContent = '🔧';
-					this.title = 'Активировать фильтр совместимости';
-				}, 1000);
-			} else {
-				this.style.backgroundColor = '#FF0000';
-				this.style.color = 'white';
-				this.textContent = '❌';
-				this.title = 'Не удалось найти фильтр';
-
-				setTimeout(() => {
-					this.style.backgroundColor = '#4CAF50';
-					this.style.color = 'white';
-					this.textContent = '🔧';
-					this.title = 'Активировать фильтр совместимости';
-				}, 1000);
+	// Добавляем кнопку в body
+	if (document.body) {
+		document.body.appendChild(button);
+	} else {
+		const observer = new MutationObserver(function () {
+			if (document.body) {
+				document.body.appendChild(button);
+				observer.disconnect();
 			}
 		});
 
-		// Добавляем кнопку в body
-		if (document.body) {
-			document.body.appendChild(button);
-			console.log('🔧 Кнопка фильтра создана');
-		} else {
-			// Если body еще нет, ждем
-			const observer = new MutationObserver(function() {
-				if (document.body) {
-					document.body.appendChild(button);
-					console.log('🔧 Кнопка фильтра создана');
-					observer.disconnect();
-				}
-			});
-			
-			observer.observe(document.documentElement, {
-				childList: true,
-				subtree: true
-			});
-		}
-	}
-
-	// Запускаем создание кнопки
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', createButton);
-	} else {
-		createButton();
+		observer.observe(document.documentElement, {
+			childList: true,
+			subtree: true,
+		});
 	}
 })();
