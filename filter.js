@@ -172,17 +172,17 @@
 		if (success) {
 			// this.style.backgroundColor = '#00FF00';
 			// this.style.color = 'black';
-			this.textContent = '\u00A0' + 'Фильтр активирован 🔧';
+			this.textContent = '\u00A0' + '\u00A0' + 'Фильтр активирован 🔧';
 
 			setTimeout(() => {
-				this.style.backgroundColor = '';
-				this.style.color = '';
+				// this.style.backgroundColor = '';
+				// this.style.color = '';
 				this.textContent = '🔧';
 			}, 1000);
 		} else {
 			this.style.backgroundColor = '#FF0000';
 			this.style.color = 'white';
-			this.textContent = '\u00A0' + 'Не удалось найти фильтр 🔧';
+			this.textContent = '\u00A0' + '\u00A0' + 'Не удалось найти "Совместимость" 🔧';
 
 			setTimeout(() => {
 				this.style.backgroundColor = '';
