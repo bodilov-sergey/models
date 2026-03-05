@@ -170,8 +170,8 @@
 		const success = initCompatibilityFilter();
 
 		if (success) {
-			this.style.backgroundColor = '#00FF00';
-			this.style.color = 'black';
+			// this.style.backgroundColor = '#00FF00';
+			// this.style.color = 'black';
 			this.textContent = '\u00A0' + 'Фильтр активирован 🔧';
 
 			setTimeout(() => {
