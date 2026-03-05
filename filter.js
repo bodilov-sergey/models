@@ -172,7 +172,7 @@
 		if (success) {
 			this.style.backgroundColor = '#00FF00';
 			this.style.color = 'black';
-			this.textContent = '_Фильтр активирован 🔧';
+			this.textContent = '\u00A0' + 'Фильтр активирован 🔧';
 
 			setTimeout(() => {
 				this.style.backgroundColor = '';
@@ -182,7 +182,7 @@
 		} else {
 			this.style.backgroundColor = '#FF0000';
 			this.style.color = 'white';
-			this.textContent = '_Не удалось найти фильтр 🔧';
+			this.textContent = '\u00A0' + 'Не удалось найти фильтр 🔧';
 
 			setTimeout(() => {
 				this.style.backgroundColor = '';
