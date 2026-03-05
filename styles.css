@@ -9,6 +9,7 @@
 	background-color: #4caf50;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	transition: background-color 0.3s;
+	color: white;
 }
 
 #compatibility-filter-activator:hover {
