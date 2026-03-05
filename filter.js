@@ -170,13 +170,9 @@
 		const success = initCompatibilityFilter();
 
 		if (success) {
-			// this.style.backgroundColor = '#00FF00';
-			// this.style.color = 'black';
 			this.textContent = '\u00A0' + '\u00A0' + 'Фильтр активирован 🔧';
 
 			setTimeout(() => {
-				// this.style.backgroundColor = '';
-				// this.style.color = '';
 				this.textContent = '🔧';
 			}, 1000);
 		} else {
@@ -186,7 +182,6 @@
 
 			setTimeout(() => {
 				this.style.backgroundColor = '';
-				this.style.color = '';
 				this.textContent = '🔧';
 			}, 1000);
 		}
