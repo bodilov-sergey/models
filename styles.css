@@ -25,17 +25,17 @@ textarea + .custom-dropdown-container {
 	margin-bottom: 6px;
 	margin-top: 2px;
 	position: relative;
-	display: inline-block;
 	width: 100%;
 	user-select: none;
 	display: flex;
 	gap: 3px 3px;
 	flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .custom-dropdown {
 	font-size: 16px;
-	padding: 0px 4px 4px;
+	padding: 0 0 3px;
 	cursor: pointer;
 	border: 1px solid #ccc;
 	border-radius: 3px;
