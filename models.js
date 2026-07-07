@@ -83,7 +83,7 @@ window.compatibilityModels = {
 		]
 	},
 	Косы: {
-		icon: "✂️🦯💿",   
+		icon: "🦯",   
 		models: [
 			'[2000 2KNS]',
 			'[2000 N]',
