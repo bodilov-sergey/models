@@ -95,7 +95,9 @@ window.compatibilityModels = {
 window.compatibilityModifications = {
 	Другое: {
 		icon: "🛴",
+		models: [
 			'[В РАЗРАБОТКЕ]',
+		]
 	},
 	Велосипеды: {
 		icon: "🚲",
