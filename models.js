@@ -95,28 +95,12 @@ window.compatibilityModels = {
 window.compatibilityModifications = {
 	Другое: {
 		icon: "🛴",
-		models: ['[Model 3 GTR PROF]', '[Коляска]']
+			'[В РАЗРАБОТКЕ]',
 	},
 	Велосипеды: {
 		icon: "🚲",
 		models: [
-			'[Zsun Model F8]',
-			'[GT9]',
-			'[GT10]',
-			'[GT17]',
-			'[Cross V-8]',
-			'[Cross V-8 PRO]',
-			'[Monster V-12L]',
-			'[Monster V-12]',
-			'[Allroud PCX10]',
-			'[Fedbike GTR]',
-			'[Fedbike RKS]',
-			'[Model 107]',
-			'[Apache Y]',
-			'[Apache X PRO]',
-			'[Trike 31]',
-			'[Trike xMax]',
-			'[Trike PRO]',
+			'[В РАЗРАБОТКЕ]',
 		]
 	},
 	Скутеры: {
