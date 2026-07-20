@@ -132,7 +132,6 @@ window.compatibilityModifications = {
 		models: [
 			'[PROFI]',
 			'[MS]',
-			'[MS]',
 			'[DEMOD BLACK PRO]',
 			'[DEMOD BLACK PRO S]',
 			'[DEMOD RQ 580]',
