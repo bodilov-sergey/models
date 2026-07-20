@@ -1,183 +1,200 @@
-(function() {
-    'use strict';
+(function () {
+	'use strict';
 
+	// === Поля карточки, которые обрабатываем: подпись -> источник данных ===
+	// Добавить ещё одно поле = дописать объект в этот массив.
+	const FIELDS = [
+		{ label: 'Совместимость', getData: () => window.compatibilityModels },
+		{ label: 'Модификации', getData: () => window.compatibilityModifications },
+	];
 
-		// Используем глобальные модели
-		const options = window.compatibilityModels;
-		if (!options) {
-			console.error('Модели не загружены!');
-			return false;
+	// Какому полю соответствует подпись (span). Возвращает объект из FIELDS или null.
+	function matchField(span) {
+		const text = span.textContent;
+		for (const field of FIELDS) {
+			if (text.includes(field.label)) return field;
 		}
-        
-    function createCustomDropdown(textarea) {
-        const dropdownContainer = document.createElement('div');
-        dropdownContainer.className = 'custom-dropdown-container';
+		return null;
+	}
 
-        // Закрытие всех открытых списков
-        function closeAllDropdowns() {
-            dropdownContainer.querySelectorAll('.custom-dropdown.open').forEach(dropdown => {
-                dropdown.classList.remove('open');
-                dropdown.nextElementSibling.style.display = 'none';
-            });
-        }
+	function createCustomDropdown(textarea, options) {
+		const dropdownContainer = document.createElement('div');
+		dropdownContainer.className = 'custom-dropdown-container';
 
-        // Обновление всех списков согласно текущему содержимому textarea
-        function updateAllDropdowns() {
-            const currentValues = textarea.value.split('\n').filter(v => v.trim() !== '' && v !== '-------------------');
-            dropdownContainer.querySelectorAll('.custom-option').forEach(option => {
-                option.classList.toggle('selected', currentValues.includes(option.textContent));
-            });
-        }
+		// Закрытие всех открытых списков
+		function closeAllDropdowns() {
+			dropdownContainer
+				.querySelectorAll('.custom-dropdown.open')
+				.forEach((dropdown) => {
+					dropdown.classList.remove('open');
+					dropdown.nextElementSibling.style.display = 'none';
+				});
+		}
 
-        // Создаем выпадающие списки для каждой категории
-        Object.keys(options).forEach(categoryName => {
-            const category = options[categoryName];
-            
-            const dropdown = document.createElement('div');
-            dropdown.className = 'custom-dropdown';
-            dropdown.textContent = category.icon;
-            dropdown.title = categoryName; // Добавляем подсказку с названием категории
+		// Обновление всех списков согласно текущему содержимому textarea
+		function updateAllDropdowns() {
+			const currentValues = textarea.value
+				.split('\n')
+				.filter((v) => v.trim() !== '' && v !== '-------------------');
+			dropdownContainer.querySelectorAll('.custom-option').forEach((option) => {
+				option.classList.toggle('selected', currentValues.includes(option.textContent));
+			});
+		}
 
-            const optionsList = document.createElement('div');
-            optionsList.className = 'custom-options-list';
-            optionsList.style.display = 'none';
+		// Создаём выпадающие списки для каждой категории
+		Object.keys(options).forEach((categoryName) => {
+			const category = options[categoryName];
 
-            category.models.forEach(optionText => {
-                const option = document.createElement('div');
-                option.className = 'custom-option';
-                option.textContent = optionText;
-                optionsList.appendChild(option);
-            });
+			const dropdown = document.createElement('div');
+			dropdown.className = 'custom-dropdown';
+			dropdown.textContent = category.icon;
+			dropdown.title = categoryName; // подсказка с названием категории
 
-            dropdown.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (dropdown.classList.contains('open')) {
-                    dropdown.classList.remove('open');
-                    optionsList.style.display = 'none';
-                } else {
-                    closeAllDropdowns();
-                    updateAllDropdowns(); // Обновляем перед открытием
-                    dropdown.classList.add('open');
-                    optionsList.style.display = 'block';
-                }
-            });
+			const optionsList = document.createElement('div');
+			optionsList.className = 'custom-options-list';
+			optionsList.style.display = 'none';
 
-            optionsList.addEventListener('click', (e) => {
-                if (e.target.classList.contains('custom-option')) {
-                    e.stopPropagation();
-                    e.target.classList.toggle('selected');
-                    updateTextareaValue();
-                }
-            });
+			category.models.forEach((optionText) => {
+				const option = document.createElement('div');
+				option.className = 'custom-option';
+				option.textContent = optionText;
+				optionsList.appendChild(option);
+			});
 
-            dropdownContainer.appendChild(dropdown);
-            dropdownContainer.appendChild(optionsList);
-        });
+			dropdown.addEventListener('click', (e) => {
+				e.stopPropagation();
+				if (dropdown.classList.contains('open')) {
+					dropdown.classList.remove('open');
+					optionsList.style.display = 'none';
+				} else {
+					closeAllDropdowns();
+					updateAllDropdowns(); // обновляем перед открытием
+					dropdown.classList.add('open');
+					optionsList.style.display = 'block';
+				}
+			});
 
-        // Обновление содержимого textarea
-        function updateTextareaValue() {
-            const selectedOptions = [];
-            dropdownContainer.querySelectorAll('.custom-options-list').forEach(list => {
-                list.querySelectorAll('.custom-option.selected').forEach(option => {
-                    selectedOptions.push(option.textContent);
-                });
-            });
+			optionsList.addEventListener('click', (e) => {
+				if (e.target.classList.contains('custom-option')) {
+					e.stopPropagation();
+					e.target.classList.toggle('selected');
+					updateTextareaValue();
+				}
+			});
 
-            const allLines = textarea.value.split('\n');
-            
-            // Собираем все модели из всех категорий
-            const allModels = [];
-            Object.values(options).forEach(category => {
-                allModels.push(...category.models);
-            });
-            
-            const invalidLines = allLines.filter(line => 
-                !allModels.includes(line) && line.trim() !== '' && line !== '-------------------'
-            );
+			dropdownContainer.appendChild(dropdown);
+			dropdownContainer.appendChild(optionsList);
+		});
 
-            let newValue = selectedOptions.join('\n');
-            if (invalidLines.length > 0) {
-                newValue += '\n-------------------\n' + invalidLines.join('\n');
-            }
+		// Обновление содержимого textarea
+		function updateTextareaValue() {
+			const selectedOptions = [];
+			dropdownContainer.querySelectorAll('.custom-options-list').forEach((list) => {
+				list.querySelectorAll('.custom-option.selected').forEach((option) => {
+					selectedOptions.push(option.textContent);
+				});
+			});
 
-            textarea.value = newValue;
-            
-            // Триггерим событие изменения для textarea
-            const event = new Event('change', { bubbles: true });
-            textarea.dispatchEvent(event);
-        }
+			const allLines = textarea.value.split('\n');
 
-        // Добавляем обработчик изменений textarea
-        textarea.addEventListener('change', updateAllDropdowns);
-        textarea.addEventListener('input', updateAllDropdowns);
+			// Собираем все модели из всех категорий этого поля
+			const allModels = [];
+			Object.values(options).forEach((category) => {
+				allModels.push(...category.models);
+			});
 
-        // Закрытие при клике вне области
-        document.addEventListener('click', (e) => {
-            if (!dropdownContainer.contains(e.target)) {
-                closeAllDropdowns();
-            }
-        });
+			const invalidLines = allLines.filter(
+				(line) =>
+					!allModels.includes(line) &&
+					line.trim() !== '' &&
+					line !== '-------------------'
+			);
 
-        // Первоначальная настройка
-        textarea.insertAdjacentElement('afterend', dropdownContainer);
-        textarea.dataset.replaced = "true";
-        updateAllDropdowns(); // Инициализируем состояние
-    }
+			let newValue = selectedOptions.join('\n');
+			if (invalidLines.length > 0) {
+				newValue += '\n-------------------\n' + invalidLines.join('\n');
+			}
 
-    // Обработка textarea
-    function handleTextarea(textarea) {
-        if (!textarea || textarea.dataset.replaced) return;
-        
-        // Проверяем, есть ли уже контейнер для этого textarea
-        const existingContainer = textarea.nextElementSibling;
-        if (existingContainer && existingContainer.classList.contains('custom-dropdown-container')) {
-            existingContainer.remove();
-        }
-        
-        createCustomDropdown(textarea);
-    }
+			textarea.value = newValue;
 
-    // MutationObserver для новых элементов
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            mutation.addedNodes.forEach((node) => {
-                if (node.nodeType === 1) {
-                    const compatibilitySpans = node.querySelectorAll?.('span.b-validation-label') || [];
-                    compatibilitySpans.forEach(span => {
-                        if (span.textContent.includes('Совместимость')) {
-                            const textarea = span.closest('tr')?.querySelector('textarea');
-                            if (textarea) handleTextarea(textarea);
-                        }
-                    });
-                }
-            });
-        });
-    });
+			// Триггерим событие изменения для textarea
+			const event = new Event('change', { bubbles: true });
+			textarea.dispatchEvent(event);
+		}
 
-    // Обработка существующих элементов
-    function initExistingTextareas() {
-        document.querySelectorAll('span.b-validation-label').forEach(span => {
-            if (span.textContent.includes('Совместимость')) {
-                const textarea = span.closest('tr')?.querySelector('textarea');
-                if (textarea) handleTextarea(textarea);
-            }
-        });
-    }
+		// Обработчики изменений textarea
+		textarea.addEventListener('change', updateAllDropdowns);
+		textarea.addEventListener('input', updateAllDropdowns);
 
-    // Инициализация при загрузке
-    initExistingTextareas();
-    
-    // Также переинициализируем при возможных обновлениях страницы
-    const reinitObserver = new MutationObserver((mutations) => {
-        initExistingTextareas();
-    });
-    
-    reinitObserver.observe(document.body, { 
-        childList: true, 
-        subtree: true,
-        attributes: true,
-        characterData: true
-    });
+		// Закрытие при клике вне области
+		document.addEventListener('click', (e) => {
+			if (!dropdownContainer.contains(e.target)) {
+				closeAllDropdowns();
+			}
+		});
 
-    observer.observe(document.body, { childList: true, subtree: true });
+		// Первоначальная настройка
+		textarea.insertAdjacentElement('afterend', dropdownContainer);
+		textarea.dataset.replaced = 'true';
+		updateAllDropdowns(); // инициализируем состояние
+	}
+
+	// Обработка одного textarea с данными конкретного поля
+	function handleTextarea(textarea, options) {
+		if (!textarea || textarea.dataset.replaced) return;
+		if (!options) return; // данные для этого поля ещё не загружены
+
+		// Если контейнер уже есть — убираем, чтобы пересоздать
+		const existingContainer = textarea.nextElementSibling;
+		if (
+			existingContainer &&
+			existingContainer.classList.contains('custom-dropdown-container')
+		) {
+			existingContainer.remove();
+		}
+
+		createCustomDropdown(textarea, options);
+	}
+
+	// По подписи определяем поле и обрабатываем его textarea
+	function processSpan(span) {
+		const field = matchField(span);
+		if (!field) return;
+		const textarea = span.closest('tr')?.querySelector('textarea');
+		if (textarea) handleTextarea(textarea, field.getData());
+	}
+
+	// Обработка уже существующих подписей на странице
+	function initExistingTextareas() {
+		document.querySelectorAll('span.b-validation-label').forEach(processSpan);
+	}
+
+	// Наблюдатель за новыми элементами
+	const observer = new MutationObserver((mutations) => {
+		mutations.forEach((mutation) => {
+			mutation.addedNodes.forEach((node) => {
+				if (node.nodeType === 1) {
+					const spans = node.querySelectorAll?.('span.b-validation-label') || [];
+					spans.forEach(processSpan);
+				}
+			});
+		});
+	});
+
+	// Инициализация при загрузке
+	initExistingTextareas();
+
+	// Переинициализация при возможных обновлениях страницы
+	const reinitObserver = new MutationObserver(() => {
+		initExistingTextareas();
+	});
+
+	reinitObserver.observe(document.body, {
+		childList: true,
+		subtree: true,
+		attributes: true,
+		characterData: true,
+	});
+
+	observer.observe(document.body, { childList: true, subtree: true });
 })();
