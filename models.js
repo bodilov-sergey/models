@@ -93,16 +93,66 @@ window.compatibilityModels = {
 
 
 window.compatibilityModifications = {
-	'Категория 1': {
-		icon: '⚙️',
-		models: ['[Модификация A]', '[Модификация B]', '[Модификация C]'],
+	Другое: {
+		icon: "🛴",
+		models: ['[Model 3 GTR PROF]', '[Коляска]']
 	},
-	'Категория 2': {
-		icon: '🔩',
-		models: ['[Модификация D]', '[Модификация E]'],
+	Велосипеды: {
+		icon: "🚲",
+		models: [
+			'[Zsun Model F8]',
+			'[GT9]',
+			'[GT10]',
+			'[GT17]',
+			'[Cross V-8]',
+			'[Cross V-8 PRO]',
+			'[Monster V-12L]',
+			'[Monster V-12]',
+			'[Allroud PCX10]',
+			'[Fedbike GTR]',
+			'[Fedbike RKS]',
+			'[Model 107]',
+			'[Apache Y]',
+			'[Apache X PRO]',
+			'[Trike 31]',
+			'[Trike xMax]',
+			'[Trike PRO]',
+		]
 	},
-	'Категория 3': {
-		icon: '🔋',
-		models: ['[Модификация F]', '[Модификация G]', '[Модификация H]'],
+	Скутеры: {
+		icon: "🛵",
+		models: [
+			'[В РАЗРАБОТКЕ]',
+		]
+	},
+	Трициклы: {
+		icon: "🛺",
+		models: [
+			'[В РАЗРАБОТКЕ]',
+		]
+	},
+	Мотоблоки: {
+		icon: "🚜",
+		models: [
+			'[В РАЗРАБОТКЕ]',
+		]
+	},
+	Герераторы: {
+		icon: "⚡️",
+		models: [
+			'[В РАЗРАБОТКЕ]',
+		]
+	},
+	Косы: {
+		icon: "🦯",   
+		models: [
+			'[PROFI]',
+			'[MS]',
+			'[MS]',
+			'[DEMOD BLACK PRO]',
+			'[DEMOD BLACK PRO S]',
+			'[DEMOD RQ 580]',
+			'[DEMOD RQ 580 PRO S]',
+		]
 	},
 };
