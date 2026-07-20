@@ -132,10 +132,10 @@ window.compatibilityModifications = {
 		models: [
 			'[PROFI]',
 			'[MS]',
-			'[DEMOD BLACK PRO]',
-			'[DEMOD BLACK PRO S]',
-			'[DEMOD RQ 580]',
-			'[DEMOD RQ 580 PRO S]',
+			'[BLACK PRO]',
+			'[BLACK PRO S]',
+			'[RQ 580]',
+			'[RQ 580 PRO S]',
 		]
 	},
 };
