@@ -1,210 +1,170 @@
 (function () {
 	'use strict';
 
-	// Универсальный конструктор кастомного фильтра-выпадашки.
-	// Один и тот же код обслуживает любое поле (Совместимость, Модификации, ...).
-	// Различаются только: заголовок поля, источник данных и кнопка-активатор —
-	// всё это передаётся через объект config.
-	function createCustomFilter(config) {
-		function initFilter() {
-			const filterItems = document.querySelectorAll('.filter-item');
-			let targetFilter = null;
+	// === Поля, которые обслуживает фильтр ===
+	// Чтобы добавить ещё одно поле — просто допишите объект в этот массив.
+	const FILTERS = [
+		{
+			labelTitle: 'Совместимость',
+			getData: () => window.compatibilityModels,
+		},
+		{
+			labelTitle: 'Модификации',
+			getData: () => window.compatibilityModifications,
+		},
+	];
 
-			for (let i = 0; i < filterItems.length; i++) {
-				const item = filterItems[i];
-				const label = item.querySelector('.gwt-Label');
-				if (label && label.title === config.labelTitle) {
-					targetFilter = item;
-					break;
-				}
+	// Инициализация одного поля.
+	// Возвращает статус: 'ok' | 'already' | 'no-field' | 'no-input' | 'no-data'
+	function initFilter(config) {
+		const filterItems = document.querySelectorAll('.filter-item');
+		let targetFilter = null;
+
+		for (let i = 0; i < filterItems.length; i++) {
+			const item = filterItems[i];
+			const label = item.querySelector('.gwt-Label');
+			if (!label) continue;
+			// Совпадение по title ИЛИ по видимому тексту подписи
+			// (на случай, если у поля заполнен только один из них).
+			const titleMatch = label.title === config.labelTitle;
+			const textMatch = label.textContent.trim() === config.labelTitle;
+			if (titleMatch || textMatch) {
+				targetFilter = item;
+				break;
 			}
+		}
 
-			if (!targetFilter) return false;
-			if (targetFilter.querySelector('.custom-dropdown-container')) return true;
+		if (!targetFilter) return 'no-field';
+		if (targetFilter.querySelector('.custom-dropdown-container')) return 'already';
 
-			const input = targetFilter.querySelector('input[type="text"]');
-			if (!input) return false;
+		const input = targetFilter.querySelector('input[type="text"]');
+		if (!input) return 'no-input';
 
-			// Данные берём из глобальной переменной, заданной в config
-			const options = config.getData();
-			if (!options) {
-				console.error(`Данные для "${config.labelTitle}" не загружены!`);
-				return false;
-			}
+		const options = config.getData();
+		if (!options) return 'no-data';
 
-			const container = document.createElement('div');
-			container.className = 'custom-dropdown-container';
+		const container = document.createElement('div');
+		container.className = 'custom-dropdown-container';
 
-			Object.keys(options).forEach((categoryName) => {
-				const category = options[categoryName];
+		Object.keys(options).forEach((categoryName) => {
+			const category = options[categoryName];
 
-				const dropdown = document.createElement('div');
-				dropdown.className = 'custom-dropdown';
+			const dropdown = document.createElement('div');
+			dropdown.className = 'custom-dropdown';
 
-				const iconElement = document.createElement('span');
-				iconElement.className = 'category-icon';
-				iconElement.textContent = category.icon;
+			const iconElement = document.createElement('span');
+			iconElement.className = 'category-icon';
+			iconElement.textContent = category.icon;
 
-				const textElement = document.createElement('span');
-				textElement.className = 'category-text';
-				textElement.textContent = categoryName;
-				textElement.style.display = 'none';
+			const textElement = document.createElement('span');
+			textElement.className = 'category-text';
+			textElement.textContent = categoryName;
+			textElement.style.display = 'none';
 
-				dropdown.appendChild(iconElement);
-				dropdown.appendChild(textElement);
+			dropdown.appendChild(iconElement);
+			dropdown.appendChild(textElement);
 
-				const optionsList = document.createElement('div');
-				optionsList.className = 'custom-options-list';
-				optionsList.style.display = 'none';
+			const optionsList = document.createElement('div');
+			optionsList.className = 'custom-options-list';
+			optionsList.style.display = 'none';
 
-				category.models.forEach((model) => {
-					const optionElement = document.createElement('div');
-					optionElement.className = 'custom-option';
-					optionElement.textContent = model;
-					optionElement.dataset.value = model;
+			category.models.forEach((model) => {
+				const optionElement = document.createElement('div');
+				optionElement.className = 'custom-option';
+				optionElement.textContent = model;
+				optionElement.dataset.value = model;
 
-					optionElement.addEventListener('click', function (e) {
-						e.stopPropagation();
-						input.value = this.dataset.value;
-						triggerInputEvents(input);
-						closeAllDropdowns();
-					});
-
-					optionsList.appendChild(optionElement);
-				});
-
-				dropdown.addEventListener('click', function (e) {
+				optionElement.addEventListener('click', function (e) {
 					e.stopPropagation();
-
-					const isOpen = this.classList.contains('open');
+					input.value = this.dataset.value;
+					triggerInputEvents(input);
 					closeAllDropdowns();
-
-					if (!isOpen) {
-						this.classList.add('open');
-						optionsList.style.display = 'block';
-					}
 				});
 
-				dropdown.title = categoryName;
-
-				container.appendChild(dropdown);
-				container.appendChild(optionsList);
+				optionsList.appendChild(optionElement);
 			});
 
-			const clearButton = document.createElement('div');
-			clearButton.className = 'custom-dropdown';
-			clearButton.innerHTML = '❌';
-			clearButton.title = 'Очистить';
-			clearButton.style.cursor = 'pointer';
-			clearButton.style.fontSize = '14px';
-			clearButton.style.display = 'flex';
-			clearButton.style.justifyContent = 'center';
-			clearButton.style.alignItems = 'end';
-			clearButton.style.background =
-				'linear-gradient(to bottom, #fff1f1, #ffd2d2)';
-
-			let lastValue = '';
-
-			clearButton.addEventListener('click', function (e) {
+			dropdown.addEventListener('click', function (e) {
 				e.stopPropagation();
 
-				if (this.innerHTML === '❌') {
-					if (!input.value.trim()) {
-						return;
-					}
-
-					lastValue = input.value;
-					input.value = '';
-					this.innerHTML = '↩️';
-					this.title = 'Восстановить';
-					triggerInputEvents(input);
-				} else {
-					input.value = lastValue;
-					this.innerHTML = '❌';
-					this.title = 'Очистить';
-					triggerInputEvents(input);
-				}
-			});
-
-			input.addEventListener('input', function () {
-				if (this.value && clearButton.innerHTML === '↩️') {
-					clearButton.innerHTML = '❌';
-					clearButton.title = 'Очистить';
-				}
-			});
-
-			container.appendChild(clearButton);
-			targetFilter.appendChild(container);
-
-			function closeAllDropdowns() {
-				const dropdowns = container.querySelectorAll('.custom-dropdown');
-				const optionsLists = container.querySelectorAll('.custom-options-list');
-
-				dropdowns.forEach((dropdown) => {
-					dropdown.classList.remove('open');
-				});
-
-				optionsLists.forEach((list) => {
-					list.style.display = 'none';
-				});
-			}
-
-			document.addEventListener('click', function () {
+				const isOpen = this.classList.contains('open');
 				closeAllDropdowns();
+
+				if (!isOpen) {
+					this.classList.add('open');
+					optionsList.style.display = 'block';
+				}
 			});
 
-			return true;
-		}
+			dropdown.title = categoryName;
 
-		// --- Кнопка-активатор для этого поля ---
-		const button = document.createElement('button');
-		button.id = config.buttonId;
-		button.textContent = config.buttonText;
-		button.title = config.buttonTitle;
+			container.appendChild(dropdown);
+			container.appendChild(optionsList);
+		});
 
-		// Необязательные inline-стили (нужны, например, чтобы вторая кнопка
-		// не легла поверх первой). Задаются через config.buttonStyle.
-		if (config.buttonStyle) {
-			Object.assign(button.style, config.buttonStyle);
-		}
+		const clearButton = document.createElement('div');
+		clearButton.className = 'custom-dropdown';
+		clearButton.innerHTML = '❌';
+		clearButton.title = 'Очистить';
+		clearButton.style.cursor = 'pointer';
+		clearButton.style.fontSize = '14px';
+		clearButton.style.display = 'flex';
+		clearButton.style.justifyContent = 'center';
+		clearButton.style.alignItems = 'end';
+		clearButton.style.background =
+			'linear-gradient(to bottom, #fff1f1, #ffd2d2)';
 
-		button.addEventListener('click', function () {
-			const success = initFilter();
+		let lastValue = '';
 
-			if (success) {
-				this.textContent = config.activatedText;
+		clearButton.addEventListener('click', function (e) {
+			e.stopPropagation();
 
-				setTimeout(() => {
-					this.textContent = config.buttonText;
-				}, 1000);
+			if (this.innerHTML === '❌') {
+				if (!input.value.trim()) {
+					return;
+				}
+
+				lastValue = input.value;
+				input.value = '';
+				this.innerHTML = '↩️';
+				this.title = 'Восстановить';
+				triggerInputEvents(input);
 			} else {
-				this.style.backgroundColor = '#FF0000';
-				this.style.color = 'white';
-				this.textContent = config.notFoundText;
-
-				setTimeout(() => {
-					this.style.backgroundColor = '';
-					this.style.color = '';
-					this.textContent = config.buttonText;
-				}, 1000);
+				input.value = lastValue;
+				this.innerHTML = '❌';
+				this.title = 'Очистить';
+				triggerInputEvents(input);
 			}
 		});
 
-		if (document.body) {
-			document.body.appendChild(button);
-		} else {
-			const observer = new MutationObserver(function () {
-				if (document.body) {
-					document.body.appendChild(button);
-					observer.disconnect();
-				}
+		input.addEventListener('input', function () {
+			if (this.value && clearButton.innerHTML === '↩️') {
+				clearButton.innerHTML = '❌';
+				clearButton.title = 'Очистить';
+			}
+		});
+
+		container.appendChild(clearButton);
+		targetFilter.appendChild(container);
+
+		function closeAllDropdowns() {
+			const dropdowns = container.querySelectorAll('.custom-dropdown');
+			const optionsLists = container.querySelectorAll('.custom-options-list');
+
+			dropdowns.forEach((dropdown) => {
+				dropdown.classList.remove('open');
 			});
 
-			observer.observe(document.documentElement, {
-				childList: true,
-				subtree: true,
+			optionsLists.forEach((list) => {
+				list.style.display = 'none';
 			});
 		}
+
+		document.addEventListener('click', function () {
+			closeAllDropdowns();
+		});
+
+		return 'ok';
 	}
 
 	function triggerInputEvents(input) {
@@ -215,35 +175,61 @@
 		});
 	}
 
-	// ===== Поле "Совместимость" (работает как раньше) =====
-	createCustomFilter({
-		labelTitle: 'Совместимость',
-		getData: () => window.compatibilityModels,
-		buttonId: 'compatibility-filter-activator',
-		buttonText: '🔧',
-		buttonTitle: 'Активировать фильтр совместимости',
-		activatedText: '\u00A0' + '\u00A0' + 'Фильтр активирован 🔧',
-		notFoundText: '\u00A0' + '\u00A0' + 'Не удалось найти "Совместимость" 🔧',
+	// === Одна кнопка активирует сразу все поля из FILTERS ===
+	const button = document.createElement('button');
+	button.id = 'compatibility-filter-activator';
+	button.textContent = '🔧';
+	button.title = 'Активировать фильтры';
+
+	button.addEventListener('click', function () {
+		const btn = this;
+		const notFound = [];
+		let activated = 0;
+
+		FILTERS.forEach((cfg) => {
+			const status = initFilter(cfg);
+
+			if (status === 'ok' || status === 'already') {
+				activated++;
+			} else if (status === 'no-data') {
+				notFound.push(cfg.labelTitle + ' (нет данных)');
+				console.error(`Данные для "${cfg.labelTitle}" не загружены!`);
+			} else {
+				// no-field / no-input
+				notFound.push(cfg.labelTitle);
+			}
+		});
+
+		if (notFound.length === 0) {
+			btn.textContent = '\u00A0\u00A0Фильтры активированы 🔧';
+			setTimeout(() => {
+				btn.textContent = '🔧';
+			}, 1000);
+		} else {
+			btn.style.backgroundColor = '#FF0000';
+			btn.style.color = 'white';
+			btn.textContent = '\u00A0\u00A0Не найдено: ' + notFound.join(', ') + ' 🔧';
+			setTimeout(() => {
+				btn.style.backgroundColor = '';
+				btn.style.color = '';
+				btn.textContent = '🔧';
+			}, 2500);
+		}
 	});
 
-	// ===== Поле "Модификации" (новое, тот же механизм) =====
-	createCustomFilter({
-		labelTitle: 'Модификации',
-		getData: () => window.compatibilityModifications,
-		buttonId: 'modifications-filter-activator',
-		buttonText: '🛠️',
-		buttonTitle: 'Активировать фильтр модификаций',
-		activatedText: '\u00A0' + '\u00A0' + 'Фильтр активирован 🛠️',
-		notFoundText: '\u00A0' + '\u00A0' + 'Не удалось найти "Модификации" 🛠️',
-		// ВАЖНО: у меня нет вашего CSS, который позиционирует первую кнопку (🔧),
-		// поэтому вторую кнопку (🛠️) я задаю inline-стилями как стартовую точку.
-		// Поправьте координаты под себя (или уберите buttonStyle и пропишите
-		// позицию в CSS расширения через #modifications-filter-activator).
-		buttonStyle: {
-			position: 'fixed',
-			right: '20px',
-			bottom: '60px',
-			zIndex: '99999',
-		},
-	});
+	if (document.body) {
+		document.body.appendChild(button);
+	} else {
+		const observer = new MutationObserver(function () {
+			if (document.body) {
+				document.body.appendChild(button);
+				observer.disconnect();
+			}
+		});
+
+		observer.observe(document.documentElement, {
+			childList: true,
+			subtree: true,
+		});
+	}
 })();
