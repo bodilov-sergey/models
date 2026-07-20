@@ -2,47 +2,31 @@
 	'use strict';
 
 	// === Поля, которые обслуживает фильтр ===
-	// Чтобы добавить ещё одно поле — просто допишите объект в этот массив.
+	// Добавить ещё одно поле = дописать объект в этот массив.
 	const FILTERS = [
-		{
-			labelTitle: 'Совместимость',
-			getData: () => window.compatibilityModels,
-		},
-		{
-			labelTitle: 'Модификации',
-			getData: () => window.compatibilityModifications,
-		},
+		{ labelTitle: 'Совместимость', getData: () => window.compatibilityModels },
+		{ labelTitle: 'Модификации', getData: () => window.compatibilityModifications },
 	];
 
-	// Инициализация одного поля.
-	// Возвращает статус: 'ok' | 'already' | 'no-field' | 'no-input' | 'no-data'
-	function initFilter(config) {
-		const filterItems = document.querySelectorAll('.filter-item');
-		let targetFilter = null;
+	function triggerInputEvents(input) {
+		const events = ['input', 'change', 'keyup', 'blur'];
+		events.forEach((eventType) => {
+			input.dispatchEvent(new Event(eventType, { bubbles: true }));
+		});
+	}
 
-		for (let i = 0; i < filterItems.length; i++) {
-			const item = filterItems[i];
-			const label = item.querySelector('.gwt-Label');
-			if (!label) continue;
-			// Совпадение по title ИЛИ по видимому тексту подписи
-			// (на случай, если у поля заполнен только один из них).
-			const titleMatch = label.title === config.labelTitle;
-			const textMatch = label.textContent.trim() === config.labelTitle;
-			if (titleMatch || textMatch) {
-				targetFilter = item;
-				break;
-			}
-		}
+	// Закрыть все открытые выпадашки на странице (общая для всех полей)
+	function closeAllDropdowns() {
+		document
+			.querySelectorAll('.custom-dropdown-container .custom-dropdown')
+			.forEach((d) => d.classList.remove('open'));
+		document
+			.querySelectorAll('.custom-dropdown-container .custom-options-list')
+			.forEach((list) => (list.style.display = 'none'));
+	}
 
-		if (!targetFilter) return 'no-field';
-		if (targetFilter.querySelector('.custom-dropdown-container')) return 'already';
-
-		const input = targetFilter.querySelector('input[type="text"]');
-		if (!input) return 'no-input';
-
-		const options = config.getData();
-		if (!options) return 'no-data';
-
+	// Построить выпадашку внутри конкретного поля (item) и связать её с полем ввода
+	function buildDropdown(item, input, options) {
 		const container = document.createElement('div');
 		container.className = 'custom-dropdown-container';
 
@@ -86,10 +70,8 @@
 
 			dropdown.addEventListener('click', function (e) {
 				e.stopPropagation();
-
 				const isOpen = this.classList.contains('open');
 				closeAllDropdowns();
-
 				if (!isOpen) {
 					this.classList.add('open');
 					optionsList.style.display = 'block';
@@ -118,12 +100,8 @@
 
 		clearButton.addEventListener('click', function (e) {
 			e.stopPropagation();
-
 			if (this.innerHTML === '❌') {
-				if (!input.value.trim()) {
-					return;
-				}
-
+				if (!input.value.trim()) return;
 				lastValue = input.value;
 				input.value = '';
 				this.innerHTML = '↩️';
@@ -145,37 +123,50 @@
 		});
 
 		container.appendChild(clearButton);
-		targetFilter.appendChild(container);
+		item.appendChild(container);
+	}
 
-		function closeAllDropdowns() {
-			const dropdowns = container.querySelectorAll('.custom-dropdown');
-			const optionsLists = container.querySelectorAll('.custom-options-list');
+	// Прикрепить выпадашку КО ВСЕМ полям с нужной подписью (и в фильтре, и в карточке).
+	// Возвращает { found, attached }.
+	function initFilter(config) {
+		const filterItems = document.querySelectorAll('.filter-item');
+		let found = 0;
+		let attached = 0;
 
-			dropdowns.forEach((dropdown) => {
-				dropdown.classList.remove('open');
-			});
+		for (let i = 0; i < filterItems.length; i++) {
+			const item = filterItems[i];
+			const label = item.querySelector('.gwt-Label');
+			if (!label) continue;
 
-			optionsLists.forEach((list) => {
-				list.style.display = 'none';
-			});
+			// Совпадение по title ИЛИ по видимому тексту подписи
+			const match =
+				label.title === config.labelTitle ||
+				label.textContent.trim() === config.labelTitle;
+			if (!match) continue;
+
+			found++;
+
+			// уже прикреплено к этому полю — не дублируем
+			if (item.querySelector('.custom-dropdown-container')) {
+				attached++;
+				continue;
+			}
+
+			// поле ввода: и обычный input, и textarea (в карточке товара — textarea)
+			const input = item.querySelector('input[type="text"], textarea');
+			if (!input) continue;
+
+			const options = config.getData();
+			if (!options) continue;
+
+			buildDropdown(item, input, options);
+			attached++;
 		}
 
-		document.addEventListener('click', function () {
-			closeAllDropdowns();
-		});
-
-		return 'ok';
+		return { found, attached };
 	}
 
-	function triggerInputEvents(input) {
-		const events = ['input', 'change', 'keyup', 'blur'];
-		events.forEach((eventType) => {
-			const event = new Event(eventType, { bubbles: true });
-			input.dispatchEvent(event);
-		});
-	}
-
-	// === Одна кнопка активирует сразу все поля из FILTERS ===
+	// === Одна кнопка активирует все поля из FILTERS ===
 	const button = document.createElement('button');
 	button.id = 'compatibility-filter-activator';
 	button.textContent = '🔧';
@@ -184,27 +175,20 @@
 	button.addEventListener('click', function () {
 		const btn = this;
 		const notFound = [];
-		let activated = 0;
+		let totalAttached = 0;
 
 		FILTERS.forEach((cfg) => {
-			const status = initFilter(cfg);
-
-			if (status === 'ok' || status === 'already') {
-				activated++;
-			} else if (status === 'no-data') {
-				notFound.push(cfg.labelTitle + ' (нет данных)');
-				console.error(`Данные для "${cfg.labelTitle}" не загружены!`);
-			} else {
-				// no-field / no-input
-				notFound.push(cfg.labelTitle);
-			}
+			const res = initFilter(cfg);
+			totalAttached += res.attached;
+			// поле считается проблемным, если кнопки не появились НИГДЕ
+			if (res.attached === 0) notFound.push(cfg.labelTitle);
 		});
 
 		if (notFound.length === 0) {
-			btn.textContent = '\u00A0\u00A0Фильтры активированы 🔧';
+			btn.textContent = '\u00A0\u00A0Готово: полей ' + totalAttached + ' 🔧';
 			setTimeout(() => {
 				btn.textContent = '🔧';
-			}, 1000);
+			}, 1200);
 		} else {
 			btn.style.backgroundColor = '#FF0000';
 			btn.style.color = 'white';
@@ -217,6 +201,9 @@
 		}
 	});
 
+	// Один общий обработчик: клик по странице закрывает все выпадашки
+	document.addEventListener('click', closeAllDropdowns);
+
 	if (document.body) {
 		document.body.appendChild(button);
 	} else {
@@ -226,10 +213,6 @@
 				observer.disconnect();
 			}
 		});
-
-		observer.observe(document.documentElement, {
-			childList: true,
-			subtree: true,
-		});
+		observer.observe(document.documentElement, { childList: true, subtree: true });
 	}
 })();
