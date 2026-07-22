@@ -85,8 +85,7 @@ window.compatibilityModels = {
 	Косы: {
 		icon: "🦯",   
 		models: [
-			'[2000 2KNS]',
-			'[2000 N]',
+			'[trimmer]',
 		]
 	},
 };
