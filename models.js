@@ -150,6 +150,7 @@ window.compatibilityModifications = {
 	Бетономешалки: {
 		icon: "⏳",
 		models: [
+			'[SHTENLI 130 pro]',
 			'[SHTENLI 150 pro]',
 			'[SHTENLI 165 pro]',
 			'[SHTENLI 190 pro]',
