@@ -93,18 +93,7 @@ window.compatibilityModels = {
 	Бетономешалки: {
 		icon: "⏳",
 		models: [
-			'[SHTENLI 150 pro]',
-			'[SHTENLI 165 pro]',
-			'[SHTENLI 190 pro]',
-			'[SHTENLI 210 pro]',
-			'[SHTENLI 240 pro]',
-			'[Shtenli 285 PRO]',
-			'[Profi V130]',
-			'[Profi V150]',
-			'[Profi V165]',
-			'[Profi V190]',
-			'[Profi V210]',
-			'[Profi V240]',
+			'[mixer]',
 		]
 	},
 };
