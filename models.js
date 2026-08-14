@@ -82,6 +82,7 @@ window.compatibilityModels = {
 			'[7000]',
 			'[8400]',
 			'[8900]',
+			'[generator]',
 		]
 	},
 	Косы: {
@@ -133,7 +134,13 @@ window.compatibilityModifications = {
 	Герераторы: {
 		icon: "⚡️",
 		models: [
-			'[В РАЗРАБОТКЕ]',
+			'[SHTENLI 3900 PRO]',
+			'[SHTENLI 3900 PRO S]',
+			'[SHTENLI 4400 PRO]',
+			'[SHTENLI 4400 PRO S]',
+			'[SHTENLI 5900 PRO]',
+			'[SHTENLI 7000 PRO]',
+			'[SHTENLI 8400 PRO S]',
 		]
 	},
 	Косы: {
