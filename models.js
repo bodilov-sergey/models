@@ -37,7 +37,6 @@ window.compatibilityModels = {
 			'[Model 15 Maxi Range]',
 			'[Model 16 Maxi Range]',
 			'[Model 18]',
-			'[Model 20]',
 			'[Model 21 Performance]',
 			'[Model 29 Performance]',
 			'[Model 60]',
@@ -47,8 +46,7 @@ window.compatibilityModels = {
 	Трициклы: {
 		icon: "🛺",
 		models: [
-			'[Model 108]',
-			'[Model 104]',
+			'[Model 20]',
 			'[Model 30]',
 			'[Model 31]',
 			'[Model 34]',
@@ -56,6 +54,8 @@ window.compatibilityModels = {
 			'[Model XL 40]',
 			'[Model 90]',
 			'[Model 100]',
+			'[Model 104]',
+			'[Model 108]',
 		]
 	},
 	Мотоблоки: {
