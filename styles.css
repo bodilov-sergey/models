@@ -28,7 +28,7 @@ textarea + .custom-dropdown-container {
 	width: 100%;
 	user-select: none;
 	display: flex;
-	gap: 3px 3px;
+	gap: 3px 0;
 	flex-wrap: wrap;
     justify-content: space-around;
 }
