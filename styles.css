@@ -28,13 +28,13 @@ textarea + .custom-dropdown-container {
 	width: 100%;
 	user-select: none;
 	display: flex;
-	gap: 3px 0;
+	gap: 3px 1px;
 	flex-wrap: wrap;
     justify-content: space-around;
 }
 
 .custom-dropdown {
-	font-size: 16px;
+	font-size: 15px;
 	padding: 0 0 3px;
 	cursor: pointer;
 	border: 1px solid #ccc;
