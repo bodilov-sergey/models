@@ -97,6 +97,12 @@ window.compatibilityModels = {
 			'[mixer]',
 		]
 	},
+	Компрессоры: {
+		icon: "🧯",
+		models: [
+			'[compressor]',
+		]
+	},
 };
 
 
@@ -170,6 +176,17 @@ window.compatibilityModifications = {
 			'[Profi V190]',
 			'[Profi V210]',
 			'[Profi V240]',
+		]
+	},
+	Компрессоры: {
+		icon: "🧯",
+		models: [
+			'[Shtenli 25 PRO]',
+			'[Shtenli 50 PRO]',
+			'[Shtenli 50-2 PRO]',
+			'[Shtenli 70-2 PRO]',
+			'[Shtenli 80-2 PRO]',
+			'[Shtenli 110-2 PRO]',
 		]
 	},
 };
