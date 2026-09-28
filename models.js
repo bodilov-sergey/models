@@ -18,7 +18,7 @@ window.compatibilityModels = {
 			'[Allroud PCX10]',
 			'[Fedbike GTR]',
 			'[Fedbike RKS]',
-			'[Model 107]',
+			'[Trekking 55]',
 			'[Apache Y]',
 			'[Apache X PRO]',
 			'[Trike 31]',
