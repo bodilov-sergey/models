@@ -2,107 +2,129 @@
 window.compatibilityModels = {
 	Другое: {
 		icon: "🛴",
-		models: ['[Model 3 GTR PROF]', '[Коляска]']
+		models: ['[(KSC) Model 3 GTR PROF]', '[(STR) Коляска]']
 	},
 	Велосипеды: {
 		icon: "🚲",
 		models: [
-			'[Zsun Model F8]',
-			'[GT9]',
-			'[GT10]',
-			'[GT17]',
-			'[Cross V-8]',
-			'[Cross V-8 PRO]',
-			'[Monster V-12L]',
-			'[Monster V-12]',
-			'[Allroud PCX10]',
-			'[Fedbike GTR]',
-			'[Fedbike RKS]',
-			'[Trekking 55]',
-			'[Apache Y]',
-			'[Apache X PRO]',
-			'[Trike 31]',
-			'[Trike xMax]',
-			'[Trike PRO]',
+			'[(BIK) Zsun Model F8]',
+			'[(BIK) GT9]',
+			'[(BIK) GT10]',
+			'[(BIK) GT17]',
+			'[(BIK) Cross V-8]',
+			'[(BIK) Cross V-8 PRO]',
+			'[(BIK) Monster V-12L]',
+			'[(BIK) Monster V-12]',
+			'[(BIK) Allroud PCX10]',
+			'[(BIK) Fedbike GTR]',
+			'[(BIK) Fedbike RKS]',
+			'[(BIK) Trekking 55]',
+			'[(BIK) Apache Y]',
+			'[(BIK) Apache X PRO]',
+			'[(BIK) Trike 31]',
+			'[(BIK) Trike xMax]',
+			'[(BIK) Trike PRO]',
 		]
 	},
 	Скутеры: {
 		icon: "🛵",
 		models: [
-			'[Model 3 Standard Range]',
-			'[Model 3 Long Range]',
-			'[Model 9 Long Range]',
-			'[Model 11 Standard Range]',
-			'[Model 14 mini]',
-			'[Model 15 Maxi Range]',
-			'[Model 16 Maxi Range]',
-			'[Model 18]',
-			'[Model 21 Performance]',
-			'[Model 29 Performance]',
-			'[Model 60]',
-			'[Model 70]',
+			'[(SCT) Model 3 Standard Range]',
+			'[(SCT) Model 3 Long Range]',
+			'[(SCT) Model 9 Long Range]',
+			'[(SCT) Model 11 Standard Range]',
+			'[(SCT) Model 14 mini]',
+			'[(SCT) Model 15 Maxi Range]',
+			'[(SCT) Model 16 Maxi Range]',
+			'[(SCT) Model 18]',
+			'[(SCT) Model 21 Performance]',
+			'[(SCT) Model 29 Performance]',
+			'[(SCT) Model 60]',
+			'[(SCT) Model 70]',
 		]
 	},
 	Трициклы: {
 		icon: "🛺",
 		models: [
-			'[Model 20]',
-			'[Model 30]',
-			'[Model 31]',
-			'[Model 34]',
-			'[Model 37]',
-			'[Model XL 40]',
-			'[Model 90]',
-			'[Model 100]',
-			'[Model 104]',
-			'[Model 108]',
+			'[(TRC) Model 20]',
+			'[(TRC) Model 30]',
+			'[(TRC) Model 31]',
+			'[(TRC) Model 34]',
+			'[(TRC) Model 37]',
+			'[(TRC) Model XL 40]',
+			'[(TRC) Model 90]',
+			'[(TRC) Model 100]',
+			'[(TRC) Model 104]',
+			'[(TRC) Model 108]',
 		]
 	},
 	Мотоблоки: {
 		icon: "🚜",
 		models: [
-			'[1800]',
-			'[1900]',
-			'[1030]',
-			'[900]',
-			'[500]',
-			'[1000]',
-			'[8000]',
-			'[2000 2KNS]',
-			'[2000 N]',
-			'[Адаптер АМ-4]',
-			'[Адаптер АМ-7]',
+			'[(TRA) 500]',
+			'[(TRA) 900]',
+			'[(TRA) 1000]',
+			'[(TRA) 1030]',
+			'[(TRA) 1800]',
+			'[(TRA) 1900]',
+			'[(TRA) 2000 N]',
+			'[(TRA) 2000 2KNS]',
+			'[(TRA) 7000]',
+			'[(TRA) 8000]',
+			'[(TRA) Адаптер АМ-4]',
+			'[(TRA) Адаптер АМ-7]',
 		]
 	},
 	Герераторы: {
 		icon: "⚡️",
 		models: [
-			'[3900]',
-			'[4400]',
-			'[5900]',
-			'[6400]',
-			'[7000]',
-			'[8400]',
-			'[8900]',
-			'[generator]',
+			'[(GEN) 3900]',
+			'[(GEN) 4400]',
+			'[(GEN) 5900]',
+			'[(GEN) 6400]',
+			'[(GEN) 7000]',
+			'[(GEN) 8400]',
+			'[(GEN) 8900]',
 		]
 	},
 	Косы: {
 		icon: "🦯", 
 		models: [
-			'[trimmer]',
+			'[(TRM) PROFI]',
+			'[(TRM) MS]',
+			'[(TRM) BLACK PRO]',
+			'[(TRM) BLACK PRO S]',
+			'[(TRM) RQ 580]',
+			'[(TRM) RQ 580 PRO S]',
 		]
 	},
 	Бетономешалки: {
 		icon: "⏳",
 		models: [
-			'[mixer]',
+			'[(MIX) SHTENLI 130 pro]',
+			'[(MIX) SHTENLI 150 pro]',
+			'[(MIX) SHTENLI 165 pro]',
+			'[(MIX) SHTENLI 190 pro]',
+			'[(MIX) SHTENLI 210 pro]',
+			'[(MIX) SHTENLI 240 pro]',
+			'[(MIX) Shtenli 285 PRO]',
+			'[(MIX) Profi V130]',
+			'[(MIX) Profi V150]',
+			'[(MIX) Profi V165]',
+			'[(MIX) Profi V190]',
+			'[(MIX) Profi V210]',
+			'[(MIX) Profi V240]',
 		]
 	},
 	Компрессоры: {
 		icon: "🧯",
 		models: [
-			'[compressor]',
+			'[(CMP) Shtenli 25 PRO]',
+			'[(CMP) Shtenli 50 PRO]',
+			'[(CMP) Shtenli 50-2 PRO]',
+			'[(CMP) Shtenli 70-2 PRO]',
+			'[(CMP) Shtenli 80-2 PRO]',
+			'[(CMP) Shtenli 110-2 PRO]',
 		]
 	},
 };
@@ -112,83 +134,63 @@ window.compatibilityModifications = {
 	Другое: {
 		icon: "🛴",
 		models: [
-			'[В РАЗРАБОТКЕ]',
+			'[(KSC)]',
+			'[(STR)]',
 		]
 	},
 	Велосипеды: {
 		icon: "🚲",
 		models: [
-			'[В РАЗРАБОТКЕ]',
+			'[(BIK)]',
 		]
 	},
 	Скутеры: {
 		icon: "🛵",
 		models: [
-			'[В РАЗРАБОТКЕ]',
+			'[(SCT)]',
 		]
 	},
 	Трициклы: {
 		icon: "🛺",
 		models: [
-			'[В РАЗРАБОТКЕ]',
+			'[(TRC)]',
 		]
 	},
 	Мотоблоки: {
 		icon: "🚜",
 		models: [
-			'[В РАЗРАБОТКЕ]',
+			'[(TRA) 168F]',
+			'[(TRA) 170F]',
+			'[(TRA) 173F]',
+			'[(TRA) 177F]',
+			'[(TRA) 188F]',
+			'[(TRA) 190F]',
+			'[(TRA) 192F]',
+			'[(TRA)]',
 		]
 	},
 	Герераторы: {
 		icon: "⚡️",
 		models: [
-			'[SHTENLI 3900 PRO]',
-			'[SHTENLI 3900 PRO S]',
-			'[SHTENLI 4400 PRO]',
-			'[SHTENLI 4400 PRO S]',
-			'[SHTENLI 5900 PRO]',
-			'[SHTENLI 7000 PRO]',
-			'[SHTENLI 8400 PRO S]',
+			'[(GEN)]',
 		]
 	},
 	Косы: {
 		icon: "🦯",   
 		models: [
-			'[PROFI]',
-			'[MS]',
-			'[BLACK PRO]',
-			'[BLACK PRO S]',
-			'[RQ 580]',
-			'[RQ 580 PRO S]',
+			'[(TRM)]',
 		]
 	},
 	Бетономешалки: {
 		icon: "⏳",
 		models: [
-			'[SHTENLI 130 pro]',
-			'[SHTENLI 150 pro]',
-			'[SHTENLI 165 pro]',
-			'[SHTENLI 190 pro]',
-			'[SHTENLI 210 pro]',
-			'[SHTENLI 240 pro]',
-			'[Shtenli 285 PRO]',
-			'[Profi V130]',
-			'[Profi V150]',
-			'[Profi V165]',
-			'[Profi V190]',
-			'[Profi V210]',
-			'[Profi V240]',
+			'[(MIX)]',
 		]
 	},
 	Компрессоры: {
 		icon: "🧯",
 		models: [
-			'[Shtenli 25 PRO]',
-			'[Shtenli 50 PRO]',
-			'[Shtenli 50-2 PRO]',
-			'[Shtenli 70-2 PRO]',
-			'[Shtenli 80-2 PRO]',
-			'[Shtenli 110-2 PRO]',
+			'[(CMP)]',
 		]
 	},
 };
