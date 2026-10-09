@@ -148,7 +148,7 @@ window.compatibilityModifications = {
 	Другое: {
 		icon: "🛴",
 		models: [
-			'(KSC)',
+			'[В РАЗРАБОТКЕ]',
 		]
 	},
 	Велосипеды: {
