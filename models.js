@@ -13,6 +13,7 @@ window.compatibilityModels = {
 		icon: "🚲",
 		models: [
 			'[(BIK) Zsun Model F8]',
+			'[(BIK) GT8]',
 			'[(BIK) GT9]',
 			'[(BIK) GT10]',
 			'[(BIK) GT17]',
@@ -153,19 +154,19 @@ window.compatibilityModifications = {
 	Велосипеды: {
 		icon: "🚲",
 		models: [
-			'(BIK)',
+			'[В РАЗРАБОТКЕ]',
 		]
 	},
 	Скутеры: {
 		icon: "🛵",
 		models: [
-			'(SCT)',
+			'[В РАЗРАБОТКЕ]',
 		]
 	},
 	Трициклы: {
 		icon: "🛺",
 		models: [
-			'(TRC)',
+			'[В РАЗРАБОТКЕ]',
 		]
 	},
 	Мотоблоки: {
@@ -178,31 +179,29 @@ window.compatibilityModifications = {
 			'[(TRA) 188F]',
 			'[(TRA) 190F]',
 			'[(TRA) 192F]',
-			'(TRA)',
 		]
 	},
 	Генераторы: {
 		icon: "⚡️",
-		models: [
-			'(GEN)',
+			'[В РАЗРАБОТКЕ]',
 		]
 	},
 	Косы: {
 		icon: "🦯",   
 		models: [
-			'(TRM)',
+			'[В РАЗРАБОТКЕ]',
 		]
 	},
 	Бетономешалки: {
 		icon: "⏳",
 		models: [
-			'(MIX)',
+			'[В РАЗРАБОТКЕ]',
 		]
 	},
 	Компрессоры: {
 		icon: "🧯",
 		models: [
-			'(CMP)',
+			'[В РАЗРАБОТКЕ]',
 		]
 	},
 };
