@@ -4,9 +4,10 @@ window.compatibilityModels = {
 		icon: "🛴",
 		models: [
 			'[(KSC) Model 3 GTR PROF]', 
-			'[(STR) Коляска]'],
+			'[(STR) Коляска]',
 			'(KSC)',
 			'(STR)',
+		]
 	},
 	Велосипеды: {
 		icon: "🚲",
