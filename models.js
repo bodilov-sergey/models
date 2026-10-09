@@ -2,7 +2,11 @@
 window.compatibilityModels = {
 	Другое: {
 		icon: "🛴",
-		models: ['[(KSC) Model 3 GTR PROF]', '[(STR) Коляска]']
+		models: [
+			'[(KSC) Model 3 GTR PROF]', 
+			'[(STR) Коляска]'],
+			'(KSC)',
+			'(STR)',
 	},
 	Велосипеды: {
 		icon: "🚲",
@@ -24,6 +28,7 @@ window.compatibilityModels = {
 			'[(BIK) Trike 31]',
 			'[(BIK) Trike xMax]',
 			'[(BIK) Trike PRO]',
+			'(BIK)',
 		]
 	},
 	Скутеры: {
@@ -41,6 +46,7 @@ window.compatibilityModels = {
 			'[(SCT) Model 29 Performance]',
 			'[(SCT) Model 60]',
 			'[(SCT) Model 70]',
+			'(SCT)',
 		]
 	},
 	Трициклы: {
@@ -56,6 +62,7 @@ window.compatibilityModels = {
 			'[(TRC) Model 100]',
 			'[(TRC) Model 104]',
 			'[(TRC) Model 108]',
+			'(TRC)',
 		]
 	},
 	Мотоблоки: {
@@ -73,6 +80,7 @@ window.compatibilityModels = {
 			'[(TRA) 8000]',
 			'[(TRA) Адаптер АМ-4]',
 			'[(TRA) Адаптер АМ-7]',
+			'(TRA)',
 		]
 	},
 	Герераторы: {
@@ -85,6 +93,7 @@ window.compatibilityModels = {
 			'[(GEN) 7000]',
 			'[(GEN) 8400]',
 			'[(GEN) 8900]',
+			'(GEN)',
 		]
 	},
 	Косы: {
@@ -96,6 +105,7 @@ window.compatibilityModels = {
 			'[(TRM) BLACK PRO S]',
 			'[(TRM) RQ 580]',
 			'[(TRM) RQ 580 PRO S]',
+			'(TRM)',
 		]
 	},
 	Бетономешалки: {
@@ -114,6 +124,7 @@ window.compatibilityModels = {
 			'[(MIX) Profi V190]',
 			'[(MIX) Profi V210]',
 			'[(MIX) Profi V240]',
+			'(MIX)',
 		]
 	},
 	Компрессоры: {
@@ -125,6 +136,7 @@ window.compatibilityModels = {
 			'[(CMP) Shtenli 70-2 PRO]',
 			'[(CMP) Shtenli 80-2 PRO]',
 			'[(CMP) Shtenli 110-2 PRO]',
+			'(CMP)',
 		]
 	},
 };
@@ -134,26 +146,25 @@ window.compatibilityModifications = {
 	Другое: {
 		icon: "🛴",
 		models: [
-			'[(KSC)]',
-			'[(STR)]',
+			'(KSC)',
 		]
 	},
 	Велосипеды: {
 		icon: "🚲",
 		models: [
-			'[(BIK)]',
+			'(BIK)',
 		]
 	},
 	Скутеры: {
 		icon: "🛵",
 		models: [
-			'[(SCT)]',
+			'(SCT)',
 		]
 	},
 	Трициклы: {
 		icon: "🛺",
 		models: [
-			'[(TRC)]',
+			'(TRC)',
 		]
 	},
 	Мотоблоки: {
@@ -166,31 +177,31 @@ window.compatibilityModifications = {
 			'[(TRA) 188F]',
 			'[(TRA) 190F]',
 			'[(TRA) 192F]',
-			'[(TRA)]',
+			'(TRA)',
 		]
 	},
 	Герераторы: {
 		icon: "⚡️",
 		models: [
-			'[(GEN)]',
+			'(GEN)',
 		]
 	},
 	Косы: {
 		icon: "🦯",   
 		models: [
-			'[(TRM)]',
+			'(TRM)',
 		]
 	},
 	Бетономешалки: {
 		icon: "⏳",
 		models: [
-			'[(MIX)]',
+			'(MIX)',
 		]
 	},
 	Компрессоры: {
 		icon: "🧯",
 		models: [
-			'[(CMP)]',
+			'(CMP)',
 		]
 	},
 };
