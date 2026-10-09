@@ -83,7 +83,7 @@ window.compatibilityModels = {
 			'(TRA)',
 		]
 	},
-	Герераторы: {
+	Генераторы: {
 		icon: "⚡️",
 		models: [
 			'[(GEN) 3900]',
@@ -180,7 +180,7 @@ window.compatibilityModifications = {
 			'(TRA)',
 		]
 	},
-	Герераторы: {
+	Генераторы: {
 		icon: "⚡️",
 		models: [
 			'(GEN)',
