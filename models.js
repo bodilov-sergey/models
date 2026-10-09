@@ -183,6 +183,7 @@ window.compatibilityModifications = {
 	},
 	Генераторы: {
 		icon: "⚡️",
+		models: [
 			'[В РАЗРАБОТКЕ]',
 		]
 	},
